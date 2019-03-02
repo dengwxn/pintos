@@ -1,0 +1,6 @@
+/mydoc/
+build/
+*.a
+!lib.a
+/src/threads/*.txt
+/x86_64/
