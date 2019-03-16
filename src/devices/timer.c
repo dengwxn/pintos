@@ -7,6 +7,8 @@
 #include "threads/interrupt.h"
 #include "threads/synch.h"
 #include "threads/thread.h"
+
+static struct list sleep_list;
   
 /* See [8254] for hardware details of the 8254 timer chip. */
 
@@ -35,6 +37,7 @@ static void real_time_delay (int64_t num, int32_t denom);
 void
 timer_init (void) 
 {
+  list_init(&sleep_list);
   pit_configure_channel (0, 2, TIMER_FREQ);
   intr_register_ext (0x20, timer_interrupt, "8254 Timer");
 }
@@ -89,11 +92,14 @@ timer_elapsed (int64_t then)
 void
 timer_sleep (int64_t ticks) 
 {
-  int64_t start = timer_ticks ();
-
+  enum intr_level old_level = intr_disable ();
+  struct thread *cur = thread_current ();
+  cur->start = timer_ticks ();
+  cur->ticks = ticks;
+  list_push_front(&sleep_list, &(cur->elem));
+  thread_block ();
+  intr_set_level (old_level);
   ASSERT (intr_get_level () == INTR_ON);
-  while (timer_elapsed (start) < ticks) 
-    thread_yield ();
 }
 
 /* Sleeps for approximately MS milliseconds.  Interrupts must be
@@ -172,6 +178,21 @@ timer_interrupt (struct intr_frame *args UNUSED)
 {
   ticks++;
   thread_tick ();
+  struct list_elem *e, *backup;
+  struct thread *t;
+  enum intr_level old_level = intr_disable ();
+  for (e = list_begin (&sleep_list); e != list_end (&sleep_list); e = backup)
+  {
+    t = list_entry (e, struct thread, elem);
+    backup = e->next;
+    if (t->ticks + t->start <= timer_ticks())
+    {
+      list_remove(e);
+      thread_unblock(t);
+    }
+  }
+  intr_set_level (old_level);
+
 }
 
 /* Returns true if LOOPS iterations waits for more than one timer
