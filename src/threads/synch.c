@@ -122,10 +122,12 @@ sema_up (struct semaphore *sema)
 
   old_level = intr_disable ();
   sema->value++;
-  list_sort(&sema->waiters, cmp_pri_by_thread_elem, NULL);
   if (!list_empty (&sema->waiters)) 
-    thread_unblock (list_entry (list_pop_front (&sema->waiters),
-                                struct thread, elem));
+  {
+    struct list_elem *e = list_min(&sema->waiters, cmp_pri_by_thread_elem, NULL);
+    list_remove(e);
+    thread_unblock (list_entry (e, struct thread, elem));
+  }
   intr_set_level (old_level);
   thread_yield();
 }
@@ -368,10 +370,12 @@ cond_signal (struct condition *cond, struct lock *lock UNUSED)
   ASSERT (!intr_context ());
   ASSERT (lock_held_by_current_thread (lock));
 
-  list_sort(&cond->waiters, cmp_pri_by_cond_elem, NULL);
   if (!list_empty (&cond->waiters)) 
-    sema_up (&list_entry (list_pop_front (&cond->waiters),
-                          struct semaphore_elem, elem)->semaphore);
+  {
+    struct list_elem *e = list_min(&cond->waiters, cmp_pri_by_cond_elem, NULL);
+    list_remove(e);
+    sema_up (&list_entry (e, struct semaphore_elem, elem)->semaphore);
+  }
 }
 
 /* Wakes up all threads, if any, waiting on COND (protected by

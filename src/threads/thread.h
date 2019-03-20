@@ -23,6 +23,9 @@ typedef int tid_t;
 #define PRI_MIN 0                       /* Lowest priority. */
 #define PRI_DEFAULT 31                  /* Default priority. */
 #define PRI_MAX 63                      /* Highest priority. */
+#define TAIL 14
+
+uint32_t load_avg;
 
 /* A kernel thread or user process.
 
@@ -90,6 +93,8 @@ struct thread
     int priority;                       /* Priority. */
     struct list_elem allelem;           /* List element for all threads list. */
     int64_t ticks;
+    int nice;
+    int32_t recent_cpu;
 
     /* Shared between thread.c and synch.c. */
     struct list_elem elem;              /* List element. */
@@ -109,6 +114,10 @@ struct thread
    If true, use multi-level feedback queue scheduler.
    Controlled by kernel command-line option "-o mlfqs". */
 extern bool thread_mlfqs;
+bool need_recalculated;
+
+void thread_recalculated_per_second(void);
+void thread_recalculated_fourth_ticks(void);
 
 void thread_init (void);
 void thread_start (void);

@@ -189,11 +189,20 @@ timer_interrupt (struct intr_frame *args UNUSED)
   struct list_elem *e, *backup;
   struct thread *t;
   enum intr_level old_level = intr_disable ();
+
+  if (thread_mlfqs)
+  {
+    if (ticks % TIMER_FREQ == 0)
+      thread_recalculated_per_second();
+    if (ticks % 4 == 0)
+      need_recalculated = 1;
+  }
+
   for (e = list_begin (&sleep_list); e != list_end (&sleep_list); e = backup)
   {
     t = list_entry (e, struct thread, elem);
     backup = e->next;
-    if (t->ticks <= timer_ticks())
+    if (t->ticks <= ticks)
     {
       list_remove(e);
       thread_unblock(t);
