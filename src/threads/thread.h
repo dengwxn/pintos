@@ -4,15 +4,15 @@
 #include <debug.h>
 #include <list.h>
 #include <stdint.h>
+#include <userprog/process.h>
 
 /* States in a thread's life cycle. */
-enum thread_status
-  {
+enum thread_status {
     THREAD_RUNNING,     /* Running thread. */
     THREAD_READY,       /* Not running but ready to run. */
     THREAD_BLOCKED,     /* Waiting for an event to trigger. */
     THREAD_DYING        /* About to be destroyed. */
-  };
+};
 
 /* Thread identifier type.
    You can redefine this to whatever type you like. */
@@ -83,8 +83,7 @@ uint32_t load_avg;
    only because they are mutually exclusive: only a thread in the
    ready state is on the run queue, whereas only a thread in the
    blocked state is on a semaphore wait list. */
-struct thread
-  {
+struct thread {
     /* Owned by thread.c. */
     tid_t tid;                          /* Thread identifier. */
     enum thread_status status;          /* Thread state. */
@@ -104,11 +103,15 @@ struct thread
 #ifdef USERPROG
     /* Owned by userprog/process.c. */
     uint32_t *pagedir;                  /* Page directory. */
+    struct process_control_block *pcb;
+    struct list child_list;
+    struct list fd_list;
+    struct file *exec_file;
 #endif
 
     /* Owned by thread.c. */
     unsigned magic;                     /* Detects stack overflow. */
-  };
+};
 
 /* If false (default), use round-robin scheduler.
    If true, use multi-level feedback queue scheduler.
@@ -117,40 +120,58 @@ extern bool thread_mlfqs;
 bool need_recalculated;
 
 void thread_recalculated_per_second(void);
+
 void thread_recalculated_fourth_ticks(void);
 
-void thread_init (void);
-void thread_start (void);
+void thread_init(void);
 
-void thread_tick (void);
-void thread_print_stats (void);
+void thread_start(void);
 
-typedef void thread_func (void *aux);
-tid_t thread_create (const char *name, int priority, thread_func *, void *);
+void thread_tick(void);
 
-void thread_block (void);
-void thread_unblock (struct thread *);
+void thread_print_stats(void);
 
-struct thread *thread_current (void);
-tid_t thread_tid (void);
-const char *thread_name (void);
+typedef void thread_func(void *aux);
 
-void thread_exit (void) NO_RETURN;
-void thread_yield (void);
+tid_t thread_create(const char *name, int priority, thread_func *, void *);
+
+void thread_block(void);
+
+void thread_unblock(struct thread *);
+
+struct thread *thread_current(void);
+
+tid_t thread_tid(void);
+
+const char *thread_name(void);
+
+void thread_exit(void) NO_RETURN;
+
+void thread_yield(void);
 
 /* Performs some operation on thread t, given auxiliary data AUX. */
-typedef void thread_action_func (struct thread *t, void *aux);
-void thread_foreach (thread_action_func *, void *);
+typedef void thread_action_func(struct thread *t, void *aux);
 
-int thread_get_priority (void);
-void thread_set_priority (int);
-void thread_refresh (struct thread *t);
+void thread_foreach(thread_action_func *, void *);
 
-int thread_get_nice (void);
-void thread_set_nice (int);
-int thread_get_recent_cpu (void);
-int thread_get_load_avg (void);
+int thread_get_priority(void);
 
-struct thread *running_thread (void);
+void thread_set_priority(int);
+
+void thread_refresh(struct thread *t);
+
+int thread_get_nice(void);
+
+void thread_set_nice(int);
+
+int thread_get_recent_cpu(void);
+
+int thread_get_load_avg(void);
+
+struct thread *running_thread(void);
+
+struct thread *get_first_ready_thread(void);
+
+int thread_get_priority_by_struct(struct thread *);
 
 #endif /* threads/thread.h */
