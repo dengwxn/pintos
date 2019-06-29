@@ -250,6 +250,9 @@ file(REMOVE_RECURSE
   "CMakeFiles/pintos.dir/src/utils/setitimer-helper.c.o"
   "CMakeFiles/pintos.dir/src/utils/squish-pty.c.o"
   "CMakeFiles/pintos.dir/src/utils/squish-unix.c.o"
+  "CMakeFiles/pintos.dir/src/vm/frame.c.o"
+  "CMakeFiles/pintos.dir/src/vm/page.c.o"
+  "CMakeFiles/pintos.dir/src/vm/swap.c.o"
   "pintos.pdb"
   "pintos"
 )

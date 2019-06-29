@@ -5,7 +5,12 @@
 #include <list.h>
 #include <stdint.h>
 #include <userprog/process.h>
+//#define VM
+#ifdef VM
+#include "vm/page.h"
+#endif
 
+//#define USERPROG
 /* States in a thread's life cycle. */
 enum thread_status {
     THREAD_RUNNING,     /* Running thread. */
@@ -107,8 +112,15 @@ struct thread {
     struct list child_list;
     struct list fd_list;
     struct file *exec_file;
+    uint8_t *current_esp;
 #endif
+#ifdef VM
+    // Project 3: Supplemental page table.
+    struct supplemental_page_table *supt;   /* Supplemental Page Table. */
 
+    // Project 3: Memory Mapped Files.
+    struct list mmap_list;
+#endif
     /* Owned by thread.c. */
     unsigned magic;                     /* Detects stack overflow. */
 };

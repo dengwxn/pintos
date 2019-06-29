@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/CLion-2019.1/clion-2019.1/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /home/zzzzzfy/Downloads/clion-2019.1.4/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /opt/CLion-2019.1/clion-2019.1/bin/cmake/linux/bin/cmake -E remove -f
+RM = /home/zzzzzfy/Downloads/clion-2019.1.4/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/rd/Documents/Code/pintos
+CMAKE_SOURCE_DIR = /home/zzzzzfy/pintos
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/rd/Documents/Code/pintos/cmake-build-debug
+CMAKE_BINARY_DIR = /home/zzzzzfy/pintos/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/rd/Documents/Code/pintos/cmake-build-debug
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/opt/CLion-2019.1/clion-2019.1/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/zzzzzfy/Downloads/clion-2019.1.4/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/opt/CLion-2019.1/clion-2019.1/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/home/zzzzzfy/Downloads/clion-2019.1.4/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/rd/Documents/Code/pintos/cmake-build-debug/CMakeFiles /home/rd/Documents/Code/pintos/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zzzzzfy/pintos/cmake-build-debug/CMakeFiles /home/zzzzzfy/pintos/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/rd/Documents/Code/pintos/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zzzzzfy/pintos/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -6900,6 +6900,87 @@ src/utils/squish-unix.c.s:
 	$(MAKE) -f CMakeFiles/pintos.dir/build.make CMakeFiles/pintos.dir/src/utils/squish-unix.c.s
 .PHONY : src/utils/squish-unix.c.s
 
+src/vm/frame.o: src/vm/frame.c.o
+
+.PHONY : src/vm/frame.o
+
+# target to build an object file
+src/vm/frame.c.o:
+	$(MAKE) -f CMakeFiles/pintos.dir/build.make CMakeFiles/pintos.dir/src/vm/frame.c.o
+.PHONY : src/vm/frame.c.o
+
+src/vm/frame.i: src/vm/frame.c.i
+
+.PHONY : src/vm/frame.i
+
+# target to preprocess a source file
+src/vm/frame.c.i:
+	$(MAKE) -f CMakeFiles/pintos.dir/build.make CMakeFiles/pintos.dir/src/vm/frame.c.i
+.PHONY : src/vm/frame.c.i
+
+src/vm/frame.s: src/vm/frame.c.s
+
+.PHONY : src/vm/frame.s
+
+# target to generate assembly for a file
+src/vm/frame.c.s:
+	$(MAKE) -f CMakeFiles/pintos.dir/build.make CMakeFiles/pintos.dir/src/vm/frame.c.s
+.PHONY : src/vm/frame.c.s
+
+src/vm/page.o: src/vm/page.c.o
+
+.PHONY : src/vm/page.o
+
+# target to build an object file
+src/vm/page.c.o:
+	$(MAKE) -f CMakeFiles/pintos.dir/build.make CMakeFiles/pintos.dir/src/vm/page.c.o
+.PHONY : src/vm/page.c.o
+
+src/vm/page.i: src/vm/page.c.i
+
+.PHONY : src/vm/page.i
+
+# target to preprocess a source file
+src/vm/page.c.i:
+	$(MAKE) -f CMakeFiles/pintos.dir/build.make CMakeFiles/pintos.dir/src/vm/page.c.i
+.PHONY : src/vm/page.c.i
+
+src/vm/page.s: src/vm/page.c.s
+
+.PHONY : src/vm/page.s
+
+# target to generate assembly for a file
+src/vm/page.c.s:
+	$(MAKE) -f CMakeFiles/pintos.dir/build.make CMakeFiles/pintos.dir/src/vm/page.c.s
+.PHONY : src/vm/page.c.s
+
+src/vm/swap.o: src/vm/swap.c.o
+
+.PHONY : src/vm/swap.o
+
+# target to build an object file
+src/vm/swap.c.o:
+	$(MAKE) -f CMakeFiles/pintos.dir/build.make CMakeFiles/pintos.dir/src/vm/swap.c.o
+.PHONY : src/vm/swap.c.o
+
+src/vm/swap.i: src/vm/swap.c.i
+
+.PHONY : src/vm/swap.i
+
+# target to preprocess a source file
+src/vm/swap.c.i:
+	$(MAKE) -f CMakeFiles/pintos.dir/build.make CMakeFiles/pintos.dir/src/vm/swap.c.i
+.PHONY : src/vm/swap.c.i
+
+src/vm/swap.s: src/vm/swap.c.s
+
+.PHONY : src/vm/swap.s
+
+# target to generate assembly for a file
+src/vm/swap.c.s:
+	$(MAKE) -f CMakeFiles/pintos.dir/build.make CMakeFiles/pintos.dir/src/vm/swap.c.s
+.PHONY : src/vm/swap.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -7662,6 +7743,15 @@ help:
 	@echo "... src/utils/squish-unix.o"
 	@echo "... src/utils/squish-unix.i"
 	@echo "... src/utils/squish-unix.s"
+	@echo "... src/vm/frame.o"
+	@echo "... src/vm/frame.i"
+	@echo "... src/vm/frame.s"
+	@echo "... src/vm/page.o"
+	@echo "... src/vm/page.i"
+	@echo "... src/vm/page.s"
+	@echo "... src/vm/swap.o"
+	@echo "... src/vm/swap.i"
+	@echo "... src/vm/swap.s"
 .PHONY : help
 
 

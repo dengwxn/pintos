@@ -631,4 +631,4 @@ add_executable(pintos
         src/Makefile
         src/Makefile.build
         src/Makefile.kernel
-        src/Makefile.userprog)
+        src/Makefile.userprog src/vm/frame.h src/vm/frame.c src/vm/page.h src/vm/page.c src/vm/swap.c src/vm/swap.h)

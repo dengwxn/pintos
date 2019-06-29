@@ -3,6 +3,7 @@
 
 #include <lib/stdbool.h>
 #include <lib/user/syscall.h>
+#include "userprog/process.h"
 
 void syscall_init(void);
 
@@ -35,5 +36,10 @@ void sys_seek(int, unsigned);
 int sys_tell(int);
 
 void sys_close(int);
+
+#ifdef VM
+// expose munmap() so that it can be call in sys_exit();
+bool sys_munmap (mmapid_t);
+#endif
 
 #endif /* userprog/syscall.h */

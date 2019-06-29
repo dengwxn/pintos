@@ -587,6 +587,9 @@ init_thread(struct thread *t, const char *name, int priority) {
     list_init(&t->fd_list);
     t->exec_file = NULL;
 #endif
+#ifdef VM
+    list_init(&t->mmap_list);
+#endif
 }
 
 /* Allocates a SIZE-byte frame at the top of thread T's stack and
